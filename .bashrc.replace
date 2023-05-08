@@ -1,0 +1,63 @@
+# your existing .bashrc contents
+
+
+export OPENAI_API_KEY="your-openai-api-key-here"
+alias troubleshoot='path/to/run_troubleshoot.sh'
+# Function to store the last 10 commands and their output
+
+
+# Function to store the last executed command and its output
+function capture_command_output() {
+  local exit_code=$?
+
+  # Save the last executed command to a temporary file
+  echo "COMMAND: $BASH_COMMAND" > /tmp/last_command_output
+
+  # Append the command to the history file
+  cat /tmp/last_command_output >> ~/.commands_history
+
+  # Execute the command and save its output to a temporary file
+  eval "$BASH_COMMAND" > /tmp/last_command_output_result 2>&1
+
+  # Append the output to the history file
+  {
+    echo "OUTPUT:"
+    cat /tmp/last_command_output_result
+  } >> ~/.commands_history
+
+  # Keep only the last 20 lines in the history file (10 commands and their output)
+  tail -n 20 ~/.commands_history > /tmp/commands_history_tmp
+  mv /tmp/commands_history_tmp ~/.commands_history
+
+  # Restore the command's exit code
+  return $exit_code
+}
+
+# Function to display and store the output of the last executed command
+function store_output() {
+  local exit_code=$?
+
+  # Filter out unnecessary commands
+  if [[ ! "$BASH_COMMAND" =~ "source ~/.bashrc" ]] && [[ ! "$BASH_COMMAND" =~ "trap" ]] && [[ ! "$BASH_COMMAND" =~ "__vsc_prompt_cmd" ]]; then
+    # Store the output in the history file
+    {
+      echo "OUTPUT:"
+      cat /tmp/last_command_output_result
+    } >> ~/.commands_history
+
+    # Keep only the last 20 lines in the history file (10 commands and their output)
+    tail -n 100 ~/.commands_history > /tmp/commands_history_tmp
+    mv /tmp/commands_history_tmp ~/.commands_history
+  fi
+
+  # Restore the command's exit code
+  return $exit_code
+}
+
+
+# Set the DEBUG trap to execute the capture_command_output function
+trap 'capture_command_output' DEBUG
+
+# Set the EXIT trap to execute the store_output function and restore the output
+trap 'exec > >(tee /tmp/last_command_output_result) 2>&1; store_output' EXIT
+
