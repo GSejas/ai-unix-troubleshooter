@@ -11,6 +11,9 @@ cat "$TROUBLESHOOTER_DIR/.bashrc.replace" >> ~/.bashrc
 
 # Replace placeholders with actual values in .bashrc
 sed -i "s|your-openai-api-key-here|$OPENAI_KEY|g" ~/.bashrc
-sed -i "s|path/to/run_troubleshoot.sh|$TROUBLESHOOTER_DIR/run_troubleshoot.sh|g" ~/.bashrc
+
+# Add the contents of .bashrc.replace to .bashrc, replacing placeholder with actual path
+cat .bashrc.replace | sed "s|PLACEHOLDER_PATH|$PWD|" >> ~/.bashrc
+
 
 echo "Installation complete. Please restart your terminal or run 'source ~/.bashrc' to apply changes."
