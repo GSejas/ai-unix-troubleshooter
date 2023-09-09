@@ -4,13 +4,21 @@ This repository contains code for a ChatGPT Troubleshooter CLI, which is a comma
 
 ## Installation
 
-To use the ChatGPT Troubleshooter, follow these steps:
+Clone the repository onto your local machine.
+```bash
+git clone git@github.com:GSejas/ai-unix-troubleshooter.git
+```
+Navigate to the cloned directory.
+```bash
+cd ai-unix-troubleshooter
+```
+Run the installation script:
+```bash
+bash install_troubleshooter.sh
+```
+This script will prompt you for your OpenAI API key.
 
-1. Clone the repository onto your local machine.
-2. Install the required dependencies by running `pip install -r requirements.txt`.
-3. Set the OpenAI API key in the environment variable `OPENAI_API_KEY`.
-4. Add the following line to your `.bashrc` file: `python3 /path/to/chatgpt_troubleshooter.py`.
-5. Save the changes to `.bashrc` and exit.
+With this setup, the user experience is enhanced since they won't have to provide the path to the ChatGPT Troubleshooter directory explicitly.
 
 ## Usage
 
@@ -21,7 +29,6 @@ To use the ChatGPT Troubleshooter, simply open a new terminal window and enter a
 - `.bashrc.replace`: A file containing commands to be added to the `.bashrc` file.
 - `.gitignore`: A file that specifies which files and directories should be ignored by Git when committing changes.
 - `chatgpt_troubleshooter.py`: The main Python script for the ChatGPT Troubleshooter CLI.
-- `requirements.txt`: A file listing the required Python dependencies for the project.
 - `run_troubleshoot.sh`: A shell script that runs the ChatGPT Troubleshooter.
 
 ## Notes
