@@ -2,7 +2,7 @@
 
 
 export OPENAI_API_KEY="your-openai-api-key-here"
-alias troubleshoot='PLACEHOLDER_PATH/chatgpt_troubleshooter.py'
+alias troubleshoot='python3 PLACEHOLDER_PATH/chatgpt_troubleshooter.py'
 # Function to store the last 10 commands and their output
 
 
